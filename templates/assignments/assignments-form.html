@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Класс - {% if object %}Редактировать{% else %}Создать{% endif %} задание{% endblock %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6">{% if object %}Редактировать{% else %}Создать{% endif %} задание</h1>
+    <form method="post" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+
+        <!-- Title Field -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="id_title">
+                Название задания
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.title.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Course Field -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="id_course">
+                Курс
+            </label>
+            {{ form.course }}
+            {% if form.course.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.course.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Due Date Field -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="id_due_date">
+                Срок сдачи
+            </label>
+            {{ form.due_date }}
+            {% if form.due_date.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.due_date.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="id_description">
+                Описание задания
+            </label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.description.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Is Active Field -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                Активное задание
+            </label>
+            <div class="flex items-center">
+                {{ form.is_active }}
+                <span class="ml-2 text-gray-700">Включить</span>
+            </div>
+            {% if form.is_active.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.is_active.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Сохранить
+            </button>
+            <a href="{% url 'assignments:list' %}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                Отмена
+            </a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

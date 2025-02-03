@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Список заданий{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold mb-6">Список заданий</h1>
+    <a href="{% url 'assignments:create' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <i class="bi bi-plus-lg"></i>
+        Создать задание
+    </a>
+</div>
+
+<div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Название
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Курс
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Срок сдачи
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Действия
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for assignment in assignments %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="{% url 'assignment-detail' assignment.pk %}" class="text-blue-500 hover:underline">
+                            {{ assignment.title }}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ assignment.course }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ assignment.due_date }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="{% url 'assignment-detail' assignment.pk %}" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                            Подробнее
+                        </a>
+                        <a href="{% url 'assignment-delete' assignment.pk %}" class="text-red-600 hover:text-red-900">
+                            Удалить
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">Заданий пока нет.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

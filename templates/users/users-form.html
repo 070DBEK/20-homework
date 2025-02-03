@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Класс - Форма пользователя{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+
+    <h1 class="text-2xl font-bold mb-6">Создать/Редактировать пользователя</h1>
+    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.full_name.id_for_label }}">
+                Имя пользователя
+            </label>
+            {{ form.full_name }}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.email.id_for_label }}">
+                Email
+            </label>
+            {{ form.email }}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.role.id_for_label }}">
+                Роль
+            </label>
+            {{ form.role }}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.pass_1.id_for_label }}">
+                Пароль
+            </label>
+            {{ form.pass_1 }}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.pass_2.id_for_label }}">
+                Подтвердите пароль
+            </label>
+            {{ form.pass_2 }}
+        </div>
+
+        <div class="text-red-500 mb-4">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Сохранить
+            </button>
+            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{% url 'users:list' %}">
+                Отмена
+            </a>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

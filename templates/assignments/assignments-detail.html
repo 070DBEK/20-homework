@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ assignment.title }}{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-4">{{ assignment.title }}</h1>
+    <p class="text-gray-700 mb-4"><strong>Курс:</strong> {{ assignment.course }}</p>
+    <p class="text-gray-700"><strong>Срок сдачи:</strong> {{ assignment.due_date }}</p>
+    <p class="text-gray-700 mb-4"><strong>Описание:</strong> {{ assignment.description }}</p>
+
+    <h2 class="text-xl font-bold mt-6 mb-2">Загрузить выполнение</h2>
+    <form method="post" enctype="multipart/form-data" class="mb-6">
+        {% csrf_token %}
+        {{ submission_form.as_p }}
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Отправить
+        </button>
+    </form>
+
+    <h2 class="text-xl font-bold mb-2">Отправленные работы ({{ submitted_count }}/{{ total_students }})</h2>
+    {% if submissions %}
+        <ul class="bg-gray-100 p-4 rounded-lg">
+            {% for submission in submissions %}
+                <li class="py-2">
+                    <span class="font-semibold">{{ submission.student }}</span> -
+                    <a href="{{ submission.file.url }}" class="text-blue-500 hover:underline">Скачать файл</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500">Пока никто не отправил работу.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
